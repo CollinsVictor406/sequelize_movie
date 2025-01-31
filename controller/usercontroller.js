@@ -16,7 +16,7 @@ exports.newUser = async (req, res) => {
         } else {
 
                  //Create the new user data into the database
-        const newUserData = await User.create({ id: uuidv4(), userName, lastName, email, age, password });
+        const newUserData = await User.create({ id: uuidv4(), userName, password, email});
 
         //Send a success response
         res.status(201).json({
@@ -81,7 +81,7 @@ exports.getOneUser = async (req, res) => {
 exports.delUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { firstName, lastName, email, age, password } = req.body;
+        const { userName, password, email } = req.body;
     
         const user = await User.findAll({ where: { id: id } });
     
@@ -92,11 +92,9 @@ exports.delUser = async (req, res) => {
           });
         } else {
           const data = (
-            firstName,
-            lastName,
-            email,
-            age,
-            password
+            userName,
+            password,
+            email
           );
   
           await User.destroy({ where: { id: id } });
@@ -121,7 +119,7 @@ exports.delUser = async (req, res) => {
   exports.updateUser = async (req, res) => {
     try {
       const { id } = req.params;
-      const { firstName, lastName, email, age, password } = req.body;
+      const { userName, password, email } = req.body;
   
       const user = await User.findAll({ where: { id: id } });
   
@@ -132,11 +130,9 @@ exports.delUser = async (req, res) => {
         });
       } else {
         const data = (
-          firstName,
-          lastName,
-          email,
-          age,
-          password
+            userName,
+            password,
+            email
         );
 
         await User.update(data, { where: { id: id } });
